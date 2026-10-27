@@ -17,15 +17,15 @@ and for how long.
 ## Key findings
 
 **No common way of saving kept its buying power from January 2006 to September 2026.**
-Prices rose about 15×, so you'd need about ₦1.5 million today to buy what ₦100,000 bought in 2006.
+Prices rose about 15.5×, so you'd need about ₦1.55 million today to buy what ₦100,000 bought in 2006.
 
 | ₦100,000 saved in Jan 2006 | Worth in naira (Sep 2026) | **What it can buy, in 2006 naira** | Real return per year |
 |---|---|---|---|
-| US dollars (cash) | ₦1,032,535 | **₦68,245** | −1.8% |
-| Treasury bills (91-day) | ₦617,455 | **₦40,811** | −4.2% |
-| 12-month fixed deposit | ₦582,785 | **₦38,519** | −4.5% |
-| Savings account | ₦208,347 | **₦13,771** | −9.1% |
-| Cash at home | ₦100,000 | **₦6,609** | −12.3% |
+| US dollars (cash) | ₦1,032,535 | **₦66,701** | −1.9% |
+| Treasury bills (91-day) | ₦617,455 | **₦39,887** | −4.3% |
+| 12-month fixed deposit | ₦582,785 | **₦37,648** | −4.6% |
+| Savings account | ₦208,347 | **₦13,459** | −9.2% |
+| Cash at home | ₦100,000 | **₦6,460** | −12.4% |
 
 1. **Savings paid less than inflation almost all the time.** Savings accounts had a negative
    real interest rate in **every one of 249 months**. Fixed deposits lost to inflation in 81% of
@@ -44,14 +44,14 @@ Prices rose about 15×, so you'd need about ₦1.5 million today to buy what ₦
 3. **Timing mattered, but no start month rescued a savings account.** Testing every start month
    with 1-, 3- and 5-year holds: savings accounts and cash never beat inflation. Fixed deposits beat
    it in only 1 of 189 five-year windows. Dollars beat it in 47% of five-year windows, but their
-   one-year results ranged from −29% to +160% depending only on the start month.
+   one-year results ranged from −31% to +160% depending only on the start month.
 
    ![Real return by start year and holding period](images/timing_heatmap.png)
 
-4. **The naira options never recovered.** Measured in buying power, cash fell 93% and savings
-   accounts 86% from their January 2006 starting point. Fixed deposits and T-bills peaked in 2008
-   and are still about 61–63% below that peak, 18 years later. Dollars fell 52%, took 18 years
-   to recover (Feb 2024), and have since fallen 48% again.
+4. **The naira options never recovered.** Measured in buying power, cash fell 93.5% and savings
+   accounts 86.5% from their January 2006 starting point. Fixed deposits and T-bills peaked in 2008
+   and are still about 62–64% below that peak, 18 years later. Dollars fell 52%, took 18 years
+   to recover (Feb 2024), and have since fallen 50% again.
 
    ![Worst fall from peak](images/worst_drawdown.png)
 
@@ -63,8 +63,8 @@ Prices rose about 15×, so you'd need about ₦1.5 million today to buy what ₦
    ![MPR vs the rates savers get](images/mpr_vs_rates.png)
 
 6. **Tax makes it a little worse.** With Nigeria's 10% withholding tax on interest, fixed deposits
-   keep about ₦32,500 of 2006 buying power instead of ₦38,500. The small positive real return on
-   Treasury bills since November 2025 turns slightly negative after tax.
+   keep about ₦31,800 of 2006 buying power instead of ₦37,600. The small positive real return on
+   Treasury bills since December 2025 turns slightly negative after tax.
 
 More charts are in [`images/`](images/), and every step is explained in the notebook.
 
@@ -89,14 +89,16 @@ More charts are in [`images/`](images/), and every step is explained in the note
 - **Approximate price index.** The CBN publishes inflation **rates** but no index feed, so the price
   index is built by turning each year-on-year rate into a monthly step, `(1 + yoy) ** (1/12) − 1`,
   and chaining them. It runs straight across the **January 2025 CPI rebasing** (chain-linked, not
-  restarted). A second method agrees on the 2006–2026 total within about 0.5%, but mid-period values
+  restarted). A second method agrees on the 2006–2026 total within about 0.2%, but mid-period values
   can differ by up to about 13%.
 
   ![Approximate price index](images/price_index.png)
 
-- **2025 inflation correction.** For January–November 2025 the CBN feed's inflation was about
-  3 points above the official National Bureau of Statistics (NBS) figures, and June repeated May.
-  Those 11 months were replaced with NBS figures from news reports of each release (sources below).
+- **2025 inflation revision.** The National Bureau of Statistics (NBS) rebasing in January 2025 used
+  December 2023 – November 2024 as its base period while labelling it "2024 = 100". On 15 January 2026,
+  NBS published a corrected series that raised every 2025 year-on-year rate by about 3 points (e.g.
+  November 2025: 14.45% first released, 17.33% revised). The CBN feed holds the **revised** figures,
+  which this project uses. News reports from 2025 quote the lower first releases.
 - **Official exchange rate only.** Before the June 2023 unification, many savers could only buy
   dollars on the parallel market at a weaker rate, and the official rate was often held flat for
   years. Dollar returns may be **understated**.
@@ -107,7 +109,8 @@ More charts are in [`images/`](images/), and every step is explained in the note
   from November 2025 on Treasury bills (after a 2011 exemption lapsed). It also shows a "10% every
   year" upper bound.
 - **Data fixes.** Fake zeros were treated as missing: the MPR before it existed (2006), and two
-  Treasury bill months (Dec 2017 and Dec 2018, filled with the previous month's rate).
+  Treasury bill months (Dec 2017 and Dec 2018, filled with the previous month's rate). June 2025
+  inflation, an exact copy of May in the feed, was interpolated between May and July.
 - **Patterns, not causes.** The policy section shows what happened together, not proof of cause and effect.
 
 ## Data sources
@@ -123,17 +126,10 @@ official API and could change or disappear, so the notebook saves a CSV snapshot
 | `https://www.cbn.gov.ng/api/GetAllExchangeRates` | Daily official exchange rates (averaged to monthly) |
 
 Other sources:
-- NBS 2025 inflation figures, as reported by
-  [NAN (Jan)](https://nannews.ng/nigerias-inflation-rate-declines-to-24-48-in-january-nbs/),
-  [Channels TV (Feb)](https://www.channelstv.com/2025/03/17/nigerias-inflation-drops-to-23-18-from-24-48),
-  [Nairametrics (Mar)](https://nairametrics.com/2025/04/15/nigerias-inflation-rate-rises-to-24-23-in-march-2025/),
-  [Ripples Nigeria (Apr–May)](https://www.ripplesnigeria.com/nigerias-inflation-rate-eases-to-22-97/),
-  [Arise (Jun)](https://www.arise.tv/nigerias-headline-inflation-rate-falls-to-22-22/),
-  [Nairametrics (Jul–Aug)](https://nairametrics.com/2025/09/15/nigerias-headline-inflation-eases-to-20-12-in-august-2025/),
-  [Guardian (Sep)](https://guardian.ng/news/nigeria/national/nigerias-inflation-drops-to-18-nbs/),
-  [NAN (Oct)](https://nannews.ng/nigerias-inflation-rate-eases-to-16-05-in-october-nbs/),
-  [NAN (Nov)](https://nannews.ng/nigerias-inflation-rate-eases-to-14-45-in-november-nbs/) and
-  [TechCabal (Dec, check only)](https://techcabal.com/2026/01/15/nigeria-2025-december-inflation-15-15-fewer-price-shocks/)
+- The January 2026 NBS revision of 2025 inflation:
+  [The NBS Backtracks (Stops and Gaps)](https://stopsandgaps.substack.com/p/the-nbs-backtracks),
+  [Arise: Teriba on the NBS inflation revision](https://www.arise.tv/teriba-nbs-inflation-revision-arbitrary-and-senseless-lacks-global-precedent),
+  [Vanguard: LCCI backs the revised CPI methodology](https://www.vanguardngr.com/2026/01/december-inflation-lcci-backs-nbs-on-revised-cpi-methodology/amp/)
 - MPR introduction in Dec 2006: [CBN monetary policy decisions, 2006](https://www.cbn.gov.ng/monetarypolicy/decisions/2006.asp)
 - Withholding tax:
   [SEC circular on the 2011 exemption order expiring](https://sec.gov.ng/circular-on-the-expiration-of-the-companies-income-tax-exemption-of-bonds-and-short-term-government-securities-order-2011),
